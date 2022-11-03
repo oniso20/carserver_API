@@ -5,7 +5,6 @@ const http = require('http');
 const { port, host } = require('./config.json');
 
 const storage = require('./carstorage');
-const { createHistogram } = require('perf_hooks');
 
 const server = http.createServer((req, res) => {
     const {
@@ -22,8 +21,14 @@ const server = http.createServer((req, res) => {
         resultHtml = createCarTypes(storage.getAllModels());
     }
 
-    else if (pathname === '/search') {
-        resultHtml = `<h1>Search</h1>`;
+    else if (pathname === '/search/bylicense') {
+        const value = searchParams.get('value');
+        resultHtml = createCarsHtml(storage.getCar('license', value));
+    }
+
+    else if (pathname === '/search/bymodel') {
+        const value = searchParams.get('value');
+        resultHtml = createCarsHtml(storage.getCar('model', value));
     }
 
     else {
@@ -67,20 +72,23 @@ function createCarsHtml(carArray) {
                 <td>${car.license}</td>
             </tr>
             `;
+        }
 
-            htmlString += `
+        htmlString += `
         </tbody>
 
             </table>
             `;
 
-            htmlString += `
+    }
 
+    htmlString += `
+            </body>
             </html>
             `;
 
-        }
-    }
+
+
     return htmlString;
 }
 
@@ -95,7 +103,7 @@ function createCarTypes(typesArray) {
   <body>
     <h1>Car models</h1>
     <ul>
-        <li>${typesArray.join('<li></li>')}</li>
+        <li>${typesArray.join('</li><li>')}</li>
     </ul>
   </body>
 </html>
