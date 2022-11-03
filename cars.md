@@ -4,7 +4,7 @@
 
 return the names of all models in storage as an array of strings
 
-The name is added to the array only ones. If nothin found, returns aan empty array
+The name is added to the array only ones. If nothing is found, returns aan empty array
 
 ## **getCar(key, value)**
 

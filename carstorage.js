@@ -16,6 +16,11 @@ function getAllModels() {
     return models;
 }
 
+// Checking the impact of this BAD (Hard Coded) implementation on the server. It doesn't affect the caller because the API is not changed
+// function getAllModels() {
+//     return ['Fast GT', 'Errare', 'MbW'];
+// }
+
 function getCar(key, value) {
     const found = [];
     if (key && value) {
