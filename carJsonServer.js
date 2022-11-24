@@ -13,7 +13,7 @@ const server = http.createServer((req, res) => {
     } = new URL(`http://${req.headers.host}${req.url}`);
 
 
-    const route = decodeURIComponent(pathname);
+    const route = decodeURIComponent(pathname); //Deals with äöå/ÖÄÅ characters
 
     let result = [];
 
@@ -39,10 +39,10 @@ const server = http.createServer((req, res) => {
 
     res.writeHead(200, {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*' //CORS Serving from different origin
     });
 
-    res.end(JSON.stringify(result, null, 2));
+    res.end(JSON.stringify(result, null, 2)); // Output as JSON && null, 2 formats our JSON nicely with two spaces.
 });
 
 server.listen(port, host, () => {
